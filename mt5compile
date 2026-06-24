@@ -91,7 +91,9 @@ compile_and_deploy() {
 
 # ── One-shot: fd all .mq5 under $HOME → fzf-pick → compile ─────────
 if [[ "$WATCH" -eq 0 ]]; then
-   SRC="$("$FD" --type f --extension mq5 . "$HOME" \
+   SRC="$("$FD" --type f --extension mq5 \
+              --exclude '.local' --exclude '.mt5' --exclude '.cache' \
+              --exclude 'Trash' . "$HOME" \
            | fzf --prompt='mq5 > ' --height=60% --reverse \
                  --preview='head -40 {}' --preview-window=right:60%)"
    [[ -n "${SRC:-}" ]] || { echo "Nothing selected."; exit 0; }
